@@ -25,21 +25,21 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package -DskipTests=true --file pom.xml
- #   - name: Login to DockerHub
- #    uses: docker/login-action@v1
- #    with:
- #        username: 'arjunkshenoy'
- #        password: '1MyDockerPassword'
- #  - name: Build and push
- #    uses: docker/build-push-action@v2
- #    with:
- #      context: .
- #      push: ${{ GitHub.event_name != 'pull_request' &&  github.ref == 'refs/heads/master' }}
- #      labels: ${{ steps.meta.outputs.labels }}
- #      tags: |
- #          arjunkshenoy/cicd:latest 
- #  - name: Image digest
- #    run: echo ${{ steps.docker_build.outputs.digest }}
+    - name: Login to DockerHub
+     uses: docker/login-action@v1
+     with:
+         username: 'arjunkshenoy'
+         password: '1MyDockerPassword'
+   - name: Build and push
+     uses: docker/build-push-action@v2
+     with:
+       context: .
+       push: ${{ GitHub.event_name != 'pull_request' &&  github.ref == 'refs/heads/develop' }}
+       labels: ${{ steps.meta.outputs.labels }}
+       tags: |
+           arjunkshenoy/lms-user-service:latest 
+   - name: Image digest
+     run: echo ${{ steps.docker_build.outputs.digest }}
       
    # - name: Build Docker Image
     #  uses: mr-smithers-excellent/docker-build-push@v5
