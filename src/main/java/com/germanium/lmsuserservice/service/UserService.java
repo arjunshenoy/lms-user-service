@@ -13,7 +13,9 @@ public interface UserService {
 	
 	public List<User> createUser(List<User> user);
 	
-	public User updateUser(Integer userId, User user);
+	public void updateUser(Integer userId, User user);
 
 	public List<User> importUserData(List<ImportUserDTO> userData);
+	
+	public void deleteUser(Integer userId);
 }

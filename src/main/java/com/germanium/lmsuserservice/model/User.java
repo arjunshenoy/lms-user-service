@@ -42,6 +42,10 @@ public class User extends SystemProperties {
 	@Column(name = "phone_number")
 	@ApiModelProperty(value = "phoneNumber")
 	private String phoneNumber;
+	
+	@Column(name ="email")
+	@ApiModelProperty(value = "email")
+	private String email;
 
 	@Column(name = "gender")
 	@ApiModelProperty(value = "phoneNumber")
@@ -192,5 +196,18 @@ public class User extends SystemProperties {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	
 
 }

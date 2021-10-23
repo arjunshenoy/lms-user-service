@@ -33,6 +33,7 @@ public class SwaggerConfig {
 	}
 
 	@Primary
+
 	@Bean
 	public SwaggerResourcesProvider swaggerResourcesProvider() {
 		return () -> {

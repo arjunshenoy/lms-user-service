@@ -2,13 +2,11 @@ package com.germanium.lmsuserservice.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
@@ -45,12 +43,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(Integer userId, User user) {
+	public void updateUser(Integer userId, User user) {
 		if (!userRepo.existsById(userId)) {
 			throw new ResourceNotFoundException("User With User Id: Not Found " + userId);
 		}
 		// userRepo.deleteById(userId);
-		return userRepo.save(user);
+		userRepo.save(user);
 
 	}
 
@@ -62,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
 			public User apply(ImportUserDTO t) {
 				User user = new User();
-				//user.setEmployeeId(Integer.parseInt(t.getEmployeeId()));
+				// user.setEmployeeId(Integer.parseInt(t.getEmployeeId()));
 				user.setFirstName(t.getFirstName());
 				user.setMiddleName(t.getMiddleName());
 				user.setLastName(t.getLastName());
@@ -74,7 +72,7 @@ public class UserServiceImpl implements UserService {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				
+
 				user.setGender(t.getGender());
 				user.setRole(t.getRole());
 				user.setDepartmentId(Integer.parseInt(t.getDepartmentId()));
@@ -86,6 +84,15 @@ public class UserServiceImpl implements UserService {
 
 		List<User> userProfiles = importUserData.stream().map(converter).collect(Collectors.<User>toList());
 		return (List<User>) userRepo.saveAll(userProfiles);
+	}
+
+	@Override
+	public void deleteUser(Integer userId) {
+		if (!userRepo.existsById(userId)) {
+			throw new ResourceNotFoundException("User With User Id: Not Found " + userId);
+		}
+		userRepo.deleteById(userId);
+
 	}
 
 }

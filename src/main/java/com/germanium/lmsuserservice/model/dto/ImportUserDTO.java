@@ -1,7 +1,5 @@
 package com.germanium.lmsuserservice.model.dto;
 
-import java.util.Date;
-
 import com.opencsv.bean.CsvBindByPosition;
 
 public class ImportUserDTO {
