@@ -32,7 +32,7 @@ import com.germanium.lmsuserservice.service.UserService;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 @RestController
-@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController implements UserServiceApi {
 
 	public static final Logger logger = LogManager.getLogger();
@@ -52,7 +52,7 @@ public class UserController implements UserServiceApi {
 	}
 
 	@PostMapping("profiles")
-	public ResponseEntity<List<User>> createUser(@Valid @RequestBody List<User> userProfile) {
+	public ResponseEntity<List<User>> createUser(@Valid @RequestBody LeaveObject userProfile) {
 		List<User> userProfileDetails = userService.createUser(userProfile);
 		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION).body(userProfileDetails);
 	}

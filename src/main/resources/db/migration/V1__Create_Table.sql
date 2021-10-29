@@ -27,6 +27,7 @@ CREATE TABLE  IF NOT EXISTS `user` (
     `middle_name` varchar(255),
     `last_name` varchar(255)  NOT NULL,
 	`phone_number` varchar(15),
+	`email` varchar(255),
 	`gender` varchar(15),
 	`dob` Date  NOT NULL,
 	`date_of_joining` DATE  NOT NULL,
