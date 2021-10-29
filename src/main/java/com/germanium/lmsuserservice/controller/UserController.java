@@ -52,7 +52,7 @@ public class UserController implements UserServiceApi {
 	}
 
 	@PostMapping("profiles")
-	public ResponseEntity<List<User>> createUser(@Valid @RequestBody LeaveObject userProfile) {
+	public ResponseEntity<List<User>> createUser(@Valid @RequestBody List<User> userProfile) {
 		List<User> userProfileDetails = userService.createUser(userProfile);
 		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION).body(userProfileDetails);
 	}
