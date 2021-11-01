@@ -42,6 +42,9 @@ public class ImportUserDTO {
 	
 	@CsvBindByPosition(position = 12)
 	private String isPermanent;
+	
+	@CsvBindByPosition(position = 13)
+	private String email;
 
 	public String getFirstName() {
 		return firstName;
@@ -136,6 +139,18 @@ public class ImportUserDTO {
 	}
 
 	public void setPermanent(String isPermanent) {
+		this.isPermanent = isPermanent;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setIsPermanent(String isPermanent) {
 		this.isPermanent = isPermanent;
 	}
 	

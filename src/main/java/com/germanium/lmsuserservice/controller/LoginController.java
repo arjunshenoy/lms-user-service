@@ -21,7 +21,7 @@ public class LoginController {
 
 	@Autowired
 	LoginService loginservice;
-
+	
 	@PostMapping("/updatePassword")
 	public ResponseEntity<String> changeUserPassword(@Valid @RequestBody UpdatePasswordDto passwordDto)
 			throws Exception {

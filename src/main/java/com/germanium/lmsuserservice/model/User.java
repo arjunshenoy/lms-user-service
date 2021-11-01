@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -43,6 +44,7 @@ public class User extends SystemProperties {
 	@ApiModelProperty(value = "phoneNumber")
 	private String phoneNumber;
 	
+	@NotNull
 	@Column(name ="email")
 	@ApiModelProperty(value = "email")
 	private String email;

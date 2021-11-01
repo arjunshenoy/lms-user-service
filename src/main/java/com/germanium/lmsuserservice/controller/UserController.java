@@ -60,8 +60,10 @@ public class UserController implements UserServiceApi {
 	@PutMapping("/profiles/{userId}")
 	public ResponseEntity<?> updateUser(@PathVariable("userId") final Integer profileId,
 			@Valid @RequestBody User userProfile) {
+
+		userService.updateUser(profileId, userProfile);
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION)
-				.body("User Updated Successfully");
+				.body("User Details updated successfully");
 
 	}
 
@@ -78,10 +80,9 @@ public class UserController implements UserServiceApi {
 		List<User> createdUsers = userService.importUserData(userDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(createdUsers);
 	}
-	
+
 	@DeleteMapping(value = "/profiles/{userId}")
-	public ResponseEntity<?> deleteUserProfile(@PathVariable("userId") Integer userId)
-	{
+	public ResponseEntity<?> deleteUserProfile(@PathVariable("userId") Integer userId) {
 		userService.deleteUser(userId);
 		return ResponseEntity.noContent().build();
 

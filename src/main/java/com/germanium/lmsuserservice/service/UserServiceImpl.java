@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
@@ -17,11 +20,11 @@ import com.germanium.lmsuserservice.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
+	@Autowired
 	private UserRepository userRepo;
 
-	public UserServiceImpl(UserRepository userRepo) {
-		this.userRepo = userRepo;
-	}
+	@Autowired
+	private LoginService loginService;
 
 	@Override
 	public List<User> getUsers() {
@@ -38,8 +41,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public List<User> createUser(List<User> user) {
-		return (List<User>) userRepo.saveAll(user);
+		List<User> savedUserDetails = (List<User>) userRepo.saveAll(user);
+		loginService.addUserLoginDetails(savedUserDetails);
+		return savedUserDetails;
+
 	}
 
 	@Override
@@ -78,12 +85,15 @@ public class UserServiceImpl implements UserService {
 				user.setDepartmentId(Integer.parseInt(t.getDepartmentId()));
 				user.setActive(Boolean.parseBoolean(t.getIsActive()));
 				user.setPermanent(Boolean.parseBoolean(t.getIsPermanent()));
+				user.setEmail(t.getEmail());
 				return user;
 			}
 		};
 
 		List<User> userProfiles = importUserData.stream().map(converter).collect(Collectors.<User>toList());
-		return (List<User>) userRepo.saveAll(userProfiles);
+		List<User> savedUsers = (List<User>) userRepo.saveAll(userProfiles);
+		loginService.addUserLoginDetails(savedUsers);
+		return savedUsers;
 	}
 
 	@Override
