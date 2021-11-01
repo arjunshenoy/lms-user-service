@@ -22,7 +22,7 @@ import com.germanium.lmsuserservice.model.dto.UserSecurityDto;
 import com.germanium.lmsuserservice.repository.LoginRepository;
 
 @Service
-public class LoginService implements UserDetailsService {
+public class LoginService implements UserDetailsService  {
 
 	@Autowired
 	private LoginRepository loginRepo;
