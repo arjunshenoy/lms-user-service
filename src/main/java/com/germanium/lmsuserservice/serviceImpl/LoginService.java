@@ -1,4 +1,4 @@
-package com.germanium.lmsuserservice.service;
+package com.germanium.lmsuserservice.serviceImpl;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

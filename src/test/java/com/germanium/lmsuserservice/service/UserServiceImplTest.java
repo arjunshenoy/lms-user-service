@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -24,10 +25,13 @@ import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
+import com.germanium.lmsuserservice.serviceImpl.LoginService;
+import com.germanium.lmsuserservice.serviceImpl.UserServiceImpl;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+@SpringBootTest
 public class UserServiceImplTest {
 
 	@Mock
