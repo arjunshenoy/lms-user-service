@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
+
 import static org.mockito.Mockito.verify;
 
 import org.mockito.ArgumentCaptor;
@@ -29,6 +31,9 @@ public class UserServiceImplTest {
 
 	@Mock
 	private UserRepository userRepo;
+
+	@Mock
+	private LoginService loginService;
 
 	@InjectMocks
 	private UserServiceImpl userService;
@@ -61,6 +66,7 @@ public class UserServiceImplTest {
 		List<User> userList = List.of(user1, user2);
 
 		when(userRepo.saveAll(isA(List.class))).thenReturn(userList);
+		doNothing().when(loginService).addUserLoginDetails(isA(List.class));
 		List<User> returnedUserList = userService.createUser(userList);
 
 		assertNotNull(returnedUserList);
@@ -107,21 +113,21 @@ public class UserServiceImplTest {
 		assertEquals(userId.getValue(), Integer.valueOf(1));
 
 	}
-	
+
 	@Test(groups = "mocked", expectedExceptions = ResourceNotFoundException.class)
 	public void updateUserProfile_ReturnsNotFoundException() {
 		User userProfile = new User();
 		when(userRepo.existsById(isA(Integer.class))).thenReturn(false);
 		userService.updateUser(1, userProfile);
 	}
-	
+
 	@Test(groups = "mocked")
 	public void updateUserProfile_verifySave() {
 		InOrder inOrder = Mockito.inOrder(userRepo);
 		User userProfile = new User();
 		when(userRepo.existsById(isA(Integer.class))).thenReturn(true);
 		userService.updateUser(1, userProfile);
-		
+
 		inOrder.verify(userRepo).save(userProfile);
 	}
 }
