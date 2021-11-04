@@ -23,6 +23,7 @@ import org.testng.annotations.Test;
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.repository.UserRepository;
+import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -34,6 +35,9 @@ public class UserServiceImplTest {
 
 	@Mock
 	private LoginService loginService;
+	
+	@Mock 
+	private CreateUserObserver createUserObserver;
 
 	@InjectMocks
 	private UserServiceImpl userService;
@@ -66,7 +70,7 @@ public class UserServiceImplTest {
 		List<User> userList = List.of(user1, user2);
 
 		when(userRepo.saveAll(isA(List.class))).thenReturn(userList);
-		doNothing().when(loginService).addUserLoginDetails(isA(List.class));
+		doNothing().when(createUserObserver).updateUserLoginTable(isA(List.class));
 		List<User> returnedUserList = userService.createUser(userList);
 
 		assertNotNull(returnedUserList);
