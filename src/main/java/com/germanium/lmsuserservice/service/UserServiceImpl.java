@@ -16,6 +16,7 @@ import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
 import com.germanium.lmsuserservice.repository.UserRepository;
+import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private CreateUserObserver createUserObserver;
 
 	@Override
 	public List<User> getUsers() {
@@ -44,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public List<User> createUser(List<User> user) {
 		List<User> savedUserDetails = (List<User>) userRepo.saveAll(user);
-		loginService.addUserLoginDetails(savedUserDetails);
+		createUserObserver.updateUserLoginTable(savedUserDetails);
 		return savedUserDetails;
 
 	}
