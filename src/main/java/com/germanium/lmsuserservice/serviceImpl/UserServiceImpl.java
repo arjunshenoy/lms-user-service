@@ -110,10 +110,11 @@ public class UserServiceImpl implements UserService	 {
 
 	}
 
-//	@Override
-//	public void deleteUsers(List<String> ids) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void deleteUsers(List<String> ids) {
+		for (String id : ids) {
+            deleteUser(Integer.valueOf(id));
+        }
+	}
 
 }
