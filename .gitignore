@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### React ###
+lms-ui/node_modules
+lms-ui/build
+lms-ui/coverage
+lms-ui/public

@@ -18,4 +18,6 @@ public interface UserService {
 	public List<User> importUserData(List<ImportUserDTO> userData);
 	
 	public void deleteUser(Integer userId);
+
+	public void deleteUsers(List<String> ids);
 }

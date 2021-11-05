@@ -82,10 +82,17 @@ public class UserController implements UserServiceApi {
 	}
 
 	@DeleteMapping(value = "/profiles/{userId}")
-	public ResponseEntity<?> deleteUserProfile(@PathVariable("userId") Integer userId) {
+	public ResponseEntity<?> deleteUserProfile(@PathVariable("userId") Integer userId)
+	{
 		userService.deleteUser(userId);
 		return ResponseEntity.noContent().build();
-
+	}
+	
+	@DeleteMapping(value = "/profiles")
+	public ResponseEntity<?> deleteUserProfile(@RequestParam("ids") List<String> ids)
+	{
+		userService.deleteUsers(ids);
+		return ResponseEntity.noContent().build();
 	}
 
 }

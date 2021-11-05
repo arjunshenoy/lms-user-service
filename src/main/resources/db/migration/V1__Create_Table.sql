@@ -62,7 +62,7 @@ CREATE TABLE `login` (
 );
 
 
-INSERT INTO login (employee_id,username, password,active, roles, created_ts) VALUES (1,'admin','admin',true,'ADMIN', current_timestamp());
+INSERT INTO login (employee_id,username, password,active, roles, created_ts) VALUES (1,'admin','$2a$10$/A05G9vqMiWmWnFTxa8zDu5IbVhAx19XQ6V4I6ZO6aqClaNpwGFrW',true,'ADMIN', current_timestamp());
 INSERT INTO login (employee_id,username, password,active, roles, created_ts) VALUES (2,'arjun','qwerty',true,'STAFF', current_timestamp());
 INSERT INTO login (employee_id,username, password,active, roles, created_ts) VALUES (3,'chinmay','qwertyu',true,'ADMIN', current_timestamp());
 
