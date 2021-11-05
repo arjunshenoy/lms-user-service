@@ -36,4 +36,6 @@ build/
 lms-ui/node_modules
 lms-ui/build
 lms-ui/coverage
-lms-ui/public
+lms-ui/public/*
+
+!lms-ui/public/.gitkeep
