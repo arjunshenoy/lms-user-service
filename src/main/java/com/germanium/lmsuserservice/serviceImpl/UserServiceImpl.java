@@ -1,4 +1,4 @@
-package com.germanium.lmsuserservice.service;
+package com.germanium.lmsuserservice.serviceImpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,9 +17,10 @@ import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
+import com.germanium.lmsuserservice.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService	 {
 
 	@Autowired
 	private UserRepository userRepo;
@@ -108,5 +109,11 @@ public class UserServiceImpl implements UserService {
 		userRepo.deleteById(userId);
 
 	}
+
+//	@Override
+//	public void deleteUsers(List<String> ids) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }
