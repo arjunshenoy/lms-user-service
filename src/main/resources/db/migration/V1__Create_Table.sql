@@ -69,7 +69,6 @@ INSERT INTO login (employee_id,username, password,active, roles, created_ts) VAL
 
 
 
-use lms;
 INSERT INTO `department` (`department_id`,`department_name`,`head_id`,`created_timestamp`,`updated_timestamp`,`created_by`,`updated_by`) VALUES(1,'ComputerScience','4545',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'admin','admin'); 
 
 

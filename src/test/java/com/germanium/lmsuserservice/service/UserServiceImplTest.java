@@ -25,6 +25,8 @@ import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
+import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
+import com.germanium.lmsuserservice.serviceImpl.LeaveServiceObserverImpl;
 import com.germanium.lmsuserservice.serviceImpl.LoginService;
 import com.germanium.lmsuserservice.serviceImpl.UserServiceImpl;
 
@@ -42,6 +44,9 @@ public class UserServiceImplTest {
 	
 	@Mock 
 	private CreateUserObserver createUserObserver;
+	
+	@Mock 
+	private LeaveServiceObserverImpl userRuleStatsObserver;
 
 	@InjectMocks
 	private UserServiceImpl userService;
@@ -75,6 +80,7 @@ public class UserServiceImplTest {
 
 		when(userRepo.saveAll(isA(List.class))).thenReturn(userList);
 		doNothing().when(createUserObserver).updateUserLoginTable(isA(List.class));
+		doNothing().when(userRuleStatsObserver).upadteRuleStatsTable(isA(List.class));
 		List<User> returnedUserList = userService.createUser(userList);
 
 		assertNotNull(returnedUserList);
