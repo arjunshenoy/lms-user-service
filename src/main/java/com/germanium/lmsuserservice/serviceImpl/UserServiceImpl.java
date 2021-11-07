@@ -17,19 +17,27 @@ import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
+import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
 import com.germanium.lmsuserservice.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService	 {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
 
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private CreateUserObserver createUserObserver;
+
+	/*
+	 * @Autowired private UserRuleStatsObserver ruleStatsObserver;
+	 */
+	
+	@Autowired
+	private LeaveServiceObserverImpl ruleStatsObserver;
 
 	@Override
 	public List<User> getUsers() {
@@ -50,6 +58,9 @@ public class UserServiceImpl implements UserService	 {
 	public List<User> createUser(List<User> user) {
 		List<User> savedUserDetails = (List<User>) userRepo.saveAll(user);
 		createUserObserver.updateUserLoginTable(savedUserDetails);
+		List<Integer> userIdList = savedUserDetails.stream().map(mapper -> mapper.getEmployeeId())
+				.collect(Collectors.toList());
+		ruleStatsObserver.upadteRuleStatsTable(userIdList);
 		return savedUserDetails;
 
 	}
@@ -97,7 +108,10 @@ public class UserServiceImpl implements UserService	 {
 
 		List<User> userProfiles = importUserData.stream().map(converter).collect(Collectors.<User>toList());
 		List<User> savedUsers = (List<User>) userRepo.saveAll(userProfiles);
-		loginService.addUserLoginDetails(savedUsers);
+		createUserObserver.updateUserLoginTable(savedUsers);
+		List<Integer> userIdList = savedUsers.stream().map(mapper -> mapper.getEmployeeId())
+				.collect(Collectors.toList());
+		ruleStatsObserver.upadteRuleStatsTable(userIdList);
 		return savedUsers;
 	}
 
@@ -113,8 +127,8 @@ public class UserServiceImpl implements UserService	 {
 	@Override
 	public void deleteUsers(List<String> ids) {
 		for (String id : ids) {
-            deleteUser(Integer.valueOf(id));
-        }
+			deleteUser(Integer.valueOf(id));
+		}
 	}
 
 }

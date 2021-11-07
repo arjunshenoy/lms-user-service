@@ -1,13 +1,9 @@
 package com.germanium.lmsuserservice.serviceImpl;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.crypto.SecretKey;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
