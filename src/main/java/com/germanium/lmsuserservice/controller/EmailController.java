@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.germanium.lmsuserservice.model.dto.MailRequest;
+import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.service.EmailService;
 
 @RequestMapping("/mail")
@@ -23,7 +23,7 @@ public class EmailController {
 	private EmailService emailService;
 
 	@PostMapping(value = "/send", consumes = "application/json")
-	public ResponseEntity<?> sendMail(@RequestBody MailRequest request) throws Exception {
+	public ResponseEntity<?> sendMail(@RequestBody MailRequestDto request) throws Exception {
 		logger.info("Received request for mail to : {}.", request.toAddress);
 		boolean isSend = emailService.sendMail(request.toAddress, request.subject, request.content);
 		if (isSend)

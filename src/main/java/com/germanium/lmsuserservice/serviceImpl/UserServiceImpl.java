@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
+import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
+import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
 import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
 import com.germanium.lmsuserservice.service.UserService;
 
@@ -35,7 +37,10 @@ public class UserServiceImpl implements UserService {
 	/*
 	 * @Autowired private UserRuleStatsObserver ruleStatsObserver;
 	 */
-	
+
+	@Autowired
+	private EmailNotificationObserver emailObserver;
+
 	@Autowired
 	private LeaveServiceObserverImpl ruleStatsObserver;
 
@@ -60,7 +65,19 @@ public class UserServiceImpl implements UserService {
 		createUserObserver.updateUserLoginTable(savedUserDetails);
 		List<Integer> userIdList = savedUserDetails.stream().map(mapper -> mapper.getEmployeeId())
 				.collect(Collectors.toList());
-		ruleStatsObserver.upadteRuleStatsTable(userIdList);
+	//	ruleStatsObserver.upadteRuleStatsTable(userIdList);
+		savedUserDetails.stream().forEach( userObject -> {
+			MailRequestDto mailRequestDto = new MailRequestDto();
+			mailRequestDto.setContent(new StringBuilder("Your details are added to LMS, \n User Name : ")
+					.append(userObject.getEmail())
+					.append("\n Password : ")
+					.append(userObject.getEmail())
+					.append(userObject.getDob().getYear()).toString());
+			mailRequestDto.setSubject("LMS User Credentails");
+			mailRequestDto.setToAddress(userObject.getEmail());
+			emailObserver.sendNotificationEmail(mailRequestDto);
+		});
+		
 		return savedUserDetails;
 
 	}
