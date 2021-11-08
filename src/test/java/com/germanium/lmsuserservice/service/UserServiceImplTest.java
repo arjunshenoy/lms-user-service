@@ -23,8 +23,10 @@ import org.testng.annotations.Test;
 
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
+import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
+import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
 import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
 import com.germanium.lmsuserservice.serviceImpl.LeaveServiceObserverImpl;
 import com.germanium.lmsuserservice.serviceImpl.LoginService;
@@ -47,6 +49,9 @@ public class UserServiceImplTest {
 	
 	@Mock 
 	private LeaveServiceObserverImpl userRuleStatsObserver;
+	
+	@Mock
+	private EmailNotificationObserver emailObserver;
 
 	@InjectMocks
 	private UserServiceImpl userService;
@@ -81,6 +86,7 @@ public class UserServiceImplTest {
 		when(userRepo.saveAll(isA(List.class))).thenReturn(userList);
 		doNothing().when(createUserObserver).updateUserLoginTable(isA(List.class));
 		doNothing().when(userRuleStatsObserver).upadteRuleStatsTable(isA(List.class));
+		doNothing().when(emailObserver).sendNotificationEmail(isA(MailRequestDto.class));
 		List<User> returnedUserList = userService.createUser(userList);
 
 		assertNotNull(returnedUserList);
