@@ -13,7 +13,7 @@ import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
 public class LeaveServiceObserverImpl implements UserRuleStatsObserver {
 
 	
-	private static final String STATS_URL ="/api/v1/leave/addLeaveStats/";
+	private static final String STATS_URL ="/api/v1/leave/leaveStats/";
 	
 
 	@Value("${leave.service.url}")

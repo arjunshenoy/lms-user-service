@@ -8,14 +8,16 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.service.EmailService;
+import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
 
 /**
  * @author, Ajin Pius Michel
  */
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl implements EmailService, EmailNotificationObserver {
 
 	private static Logger logger = LoggerFactory.getLogger(EmailService.class);
 
@@ -40,5 +42,20 @@ public class EmailServiceImpl implements EmailService {
 			logger.error("Mail sending falied. {}", exception);
 			throw new Exception("Email not sent");
 		}
+	}
+
+	//This method is used to send Login password to new users
+	@Override
+	public void sendNotificationEmail(MailRequestDto mailRequest) {
+		
+		try {
+			sendMail(mailRequest.getToAddress(), mailRequest.getSubject(), mailRequest.getContent());
+		} catch (Exception e) {
+			
+			logger.error("Mail sending falied. {}", e);
+			e.printStackTrace();
+		}
+		
+		
 	}
 }
