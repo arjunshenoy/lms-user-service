@@ -1,5 +1,8 @@
 package com.germanium.lmsuserservice.serviceImpl;
 
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +28,17 @@ public class EmailServiceImpl implements EmailService, EmailNotificationObserver
 	private JavaMailSender emailSender;
 
 	@Override
-	public boolean sendMail(String toAddress, String subject, String content) throws Exception {
+	public boolean sendMail(MailRequestDto mailRequest) throws Exception {
 		try {
-			if (StringUtils.isEmpty(toAddress) || StringUtils.isEmpty(content)) {
-				logger.error("Null toAddress or content received.");
+
+			if (ArrayUtils.isEmpty(mailRequest.getToAddress())|| StringUtils.isEmpty(mailRequest.getContent())) {
+				logger.error("Null to Address or content received.");
 				return false;
 			}
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(toAddress);
-			message.setSubject(subject);
-			message.setText(content);
+			message.setTo(mailRequest.getToAddress());
+			message.setSubject(mailRequest.getSubject());
+			message.setText(mailRequest.getContent());
 			emailSender.send(message);
 			logger.info("Message sent.");
 			return true;
@@ -44,18 +48,23 @@ public class EmailServiceImpl implements EmailService, EmailNotificationObserver
 		}
 	}
 
-	//This method is used to send Login password to new users
+	// This method is used to send Login password to new users
 	@Override
-	public void sendNotificationEmail(MailRequestDto mailRequest) {
-		
+	public boolean sendNotificationEmail(MailRequestDto mailRequest) {
+
 		try {
-			sendMail(mailRequest.getToAddress(), mailRequest.getSubject(), mailRequest.getContent());
+			return sendMail(mailRequest);
 		} catch (Exception e) {
-			
+
 			logger.error("Mail sending falied. {}", e);
 			e.printStackTrace();
+			return false;
 		}
-		
-		
+
+	}
+
+	@Override
+	public String[] getObservers(Integer userId) {
+		return null;
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.service.EmailService;
+import com.germanium.lmsuserservice.serviceImpl.LeaveServiceObserverImpl;
 
 @RequestMapping("/mail")
 @RestController
@@ -22,13 +23,26 @@ public class EmailController {
 	@Autowired
 	private EmailService emailService;
 
+	@Autowired
+	private LeaveServiceObserverImpl leaveObserver;
+
 	@PostMapping(value = "/send", consumes = "application/json")
 	public ResponseEntity<?> sendMail(@RequestBody MailRequestDto request) throws Exception {
 		logger.info("Received request for mail to : {}.", request.toAddress);
-		boolean isSend = emailService.sendMail(request.toAddress, request.subject, request.content);
+		boolean isSend = emailService.sendMail(request);
 		if (isSend)
 			return ResponseEntity.status(HttpStatus.OK).body("Message sent successfully");
 		else
 			return ResponseEntity.status(HttpStatus.OK).body("Message sent failed");
+	}
+
+	@PostMapping(value = "/leave/notify", consumes = "application/json")
+	public ResponseEntity<?> notifyUsers(@RequestBody MailRequestDto request) throws Exception {
+//		logger.info("Received request for mail to : {}.", request.toAddress);
+		boolean isSend = leaveObserver.sendNotificationEmail(request);
+		if (isSend)
+			return ResponseEntity.status(HttpStatus.OK).body(request);
+		else
+			return ResponseEntity.status(HttpStatus.OK).body(request);
 	}
 }

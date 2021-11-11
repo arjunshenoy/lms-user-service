@@ -20,6 +20,7 @@ import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
 import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
+import com.germanium.lmsuserservice.service.EmailService;
 import com.germanium.lmsuserservice.service.UserService;
 
 @Service
@@ -34,12 +35,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CreateUserObserver createUserObserver;
 
-	/*
-	 * @Autowired private UserRuleStatsObserver ruleStatsObserver;
-	 */
-
 	@Autowired
-	private EmailNotificationObserver emailObserver;
+	private EmailServiceImpl emailObserver;
 
 	@Autowired
 	private LeaveServiceObserverImpl ruleStatsObserver;
@@ -64,8 +61,8 @@ public class UserServiceImpl implements UserService {
 		List<User> savedUserDetails = (List<User>) userRepo.saveAll(user);
 		createUserObserver.updateUserLoginTable(savedUserDetails);
 		List<Integer> userIdList = savedUserDetails.stream().map(mapper -> mapper.getEmployeeId())
-				.collect(Collectors.toList());
-	//	ruleStatsObserver.upadteRuleStatsTable(userIdList);
+			.collect(Collectors.toList());
+		ruleStatsObserver.upadteRuleStatsTable(userIdList);
 		savedUserDetails.stream().forEach( userObject -> {
 			MailRequestDto mailRequestDto = new MailRequestDto();
 			mailRequestDto.setContent(new StringBuilder("Your details are added to LMS, \n User Name : ")
@@ -74,7 +71,7 @@ public class UserServiceImpl implements UserService {
 					.append(userObject.getEmail())
 					.append(userObject.getDob().getYear()).toString());
 			mailRequestDto.setSubject("LMS User Credentails");
-			mailRequestDto.setToAddress(userObject.getEmail());
+			mailRequestDto.setToAddress(new String [] {userObject.getEmail()});
 			emailObserver.sendNotificationEmail(mailRequestDto);
 		});
 		

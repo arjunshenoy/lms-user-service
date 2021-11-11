@@ -1,9 +1,12 @@
 package com.germanium.lmsuserservice.model;
 
+import javax.persistence.CascadeType;
+
 // @author: Chinmay Jose K M
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,11 +68,10 @@ public class User extends SystemProperties {
 	@ApiModelProperty(value = "isPermanent")
 	private boolean isPermanent;
 
-	@OneToOne
-	@JoinColumn(name = "department_id")
-	@Transient
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "department_id", insertable=false, updatable=false)
 	private Department department;
-
+//
 	@ApiModelProperty(value = "departmentId")
 	@Column(name = "department_id")
 	private Integer departmentId;
