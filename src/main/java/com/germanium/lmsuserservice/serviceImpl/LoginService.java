@@ -27,7 +27,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Login> user = loginRepo.findById(username);
-		if (user.isEmpty() || user == null) {
+		if (user.isEmpty()) {
 			throw new UsernameNotFoundException("Not found: " + username);
 		}
 		return user.map(UserSecurityDto::new).get();
@@ -36,7 +36,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 
 	public Login getLoggedinUserDetails(String username) {
 		Optional<Login> user = loginRepo.findById(username);
-		if (user.isEmpty() || user == null) {
+		if (user.isEmpty()) {
 			throw new UsernameNotFoundException("Not found: " + username);
 		}
 		return user.get();
