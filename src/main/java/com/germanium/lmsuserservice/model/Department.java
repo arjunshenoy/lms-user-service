@@ -1,7 +1,5 @@
 package com.germanium.lmsuserservice.model;
 
-// @author: Chinmay Jose K M
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,10 +10,11 @@ import javax.persistence.Table;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+
 @Entity
 @Table(name = "Department")
 @ApiModel(value = "Department", description = "Class that holds the Department details")
-public class Department extends SystemProperties{
+public class Department extends SystemProperties {
 	
 	@Id
 	@Column(name = "department_id")
@@ -26,6 +25,7 @@ public class Department extends SystemProperties{
 	@Column(name = "department_name")
 	@ApiModelProperty(value = "departmentName")
 	private String departmentName;
+	
 
 	@Column(name = "head_id")
 	@ApiModelProperty(value = "headId")
@@ -56,7 +56,5 @@ public class Department extends SystemProperties{
 	}
 
 
-	
-	
-	
+
 }

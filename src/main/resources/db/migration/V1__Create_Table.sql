@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `department` (
-    `department_id` int NOT NULL,
+    `department_id` int NOT NULL AUTO_INCREMENT,
     `department_name` varchar(255)  NOT NULL,
     `head_id` INT (255),
 	`created_timestamp` TIMESTAMP,
