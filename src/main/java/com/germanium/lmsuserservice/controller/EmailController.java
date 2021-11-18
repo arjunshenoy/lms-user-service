@@ -43,6 +43,6 @@ public class EmailController {
 		if (isSend)
 			return ResponseEntity.status(HttpStatus.OK).body(request);
 		else
-			return ResponseEntity.status(HttpStatus.OK).body(request);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mail couldn't sent.");
 	}
 }
