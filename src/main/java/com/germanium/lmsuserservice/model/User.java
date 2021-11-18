@@ -1,9 +1,12 @@
 package com.germanium.lmsuserservice.model;
 
+import javax.persistence.CascadeType;
+
 // @author: Chinmay Jose K M
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,6 +46,11 @@ public class User extends SystemProperties {
 	@Column(name = "phone_number")
 	@ApiModelProperty(value = "phoneNumber")
 	private String phoneNumber;
+	
+	@NotNull
+	@Column(name ="email")
+	@ApiModelProperty(value = "email")
+	private String email;
 
 	@Column(name = "gender")
 	@ApiModelProperty(value = "phoneNumber")
@@ -59,11 +68,10 @@ public class User extends SystemProperties {
 	@ApiModelProperty(value = "isPermanent")
 	private boolean isPermanent;
 
-	@OneToOne
-	@JoinColumn(name = "department_id")
-	@Transient
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "department_id", insertable=false, updatable=false)
 	private Department department;
-
+//
 	@ApiModelProperty(value = "departmentId")
 	@Column(name = "department_id")
 	private Integer departmentId;
@@ -192,5 +200,18 @@ public class User extends SystemProperties {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	
 
 }
