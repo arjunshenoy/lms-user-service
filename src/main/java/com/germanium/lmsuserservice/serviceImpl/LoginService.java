@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +29,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Login> user = loginRepo.findById(username);
 		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("Not found: " + username);
+			throw new BadCredentialsException("Bad Credentials");
 		}
 		return user.map(UserSecurityDto::new).get();
 
@@ -37,7 +38,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 	public Login getLoggedinUserDetails(String username) {
 		Optional<Login> user = loginRepo.findById(username);
 		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("Not found: " + username);
+			throw new BadCredentialsException("Bad Credentials");
 		}
 		return user.get();
 	}
@@ -57,7 +58,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 		List<Login> loginList = new ArrayList<Login>();
 		userList.stream().forEach(user -> {
 			if (loginRepo.existsById(user.getEmail())) {
-				throw new UsernameNotFoundException("User with same username already exists: " + user.getEmail());
+				throw new BadCredentialsException("Bad Credentials");
 			}
 			Login userLogin = new Login();
 			userLogin.setUserName(user.getEmail());
@@ -77,7 +78,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 		List<Login> loginList = new ArrayList<Login>();
 		userList.stream().forEach(user -> {
 			if (loginRepo.existsById(user.getEmail())) {
-				throw new UsernameNotFoundException("User with same username already exists: " + user.getEmail());
+				throw new BadCredentialsException("Bad Credentials");
 			}
 			Login userLogin = new Login();
 			userLogin.setUserName(user.getEmail());
