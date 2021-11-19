@@ -1,12 +1,10 @@
 package com.germanium.lmsuserservice.service.observer;
 
-import java.util.List;
-
 import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 
 public interface EmailNotificationObserver {
 
-	public boolean sendNotificationEmail(MailRequestDto mailRequest);
+	public boolean sendNotificationEmail(MailRequestDto mailRequest) throws Exception;
 
 	public String [] getObservers(Integer userId);
 
