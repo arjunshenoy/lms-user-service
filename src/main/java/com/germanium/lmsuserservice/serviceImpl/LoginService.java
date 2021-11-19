@@ -19,7 +19,7 @@ import com.germanium.lmsuserservice.repository.LoginRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 
 @Service
-public class LoginService implements UserDetailsService, CreateUserObserver  {
+public class LoginService implements UserDetailsService, CreateUserObserver {
 
 	@Autowired
 	private LoginRepository loginRepo;
@@ -27,14 +27,18 @@ public class LoginService implements UserDetailsService, CreateUserObserver  {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Login> user = loginRepo.findById(username);
-		user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+		if (user.isEmpty()) {
+			throw new UsernameNotFoundException("Not found: " + username);
+		}
 		return user.map(UserSecurityDto::new).get();
 
 	}
 
 	public Login getLoggedinUserDetails(String username) {
 		Optional<Login> user = loginRepo.findById(username);
-		user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+		if (user.isEmpty()) {
+			throw new UsernameNotFoundException("Not found: " + username);
+		}
 		return user.get();
 	}
 
@@ -53,7 +57,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver  {
 		List<Login> loginList = new ArrayList<Login>();
 		userList.stream().forEach(user -> {
 			if (loginRepo.existsById(user.getEmail())) {
-				new UsernameNotFoundException("User with same username already exists: " + user.getEmail());
+				throw new UsernameNotFoundException("User with same username already exists: " + user.getEmail());
 			}
 			Login userLogin = new Login();
 			userLogin.setUserName(user.getEmail());
@@ -73,7 +77,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver  {
 		List<Login> loginList = new ArrayList<Login>();
 		userList.stream().forEach(user -> {
 			if (loginRepo.existsById(user.getEmail())) {
-				new UsernameNotFoundException("User with same username already exists: " + user.getEmail());
+				throw new UsernameNotFoundException("User with same username already exists: " + user.getEmail());
 			}
 			Login userLogin = new Login();
 			userLogin.setUserName(user.getEmail());
