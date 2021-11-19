@@ -42,14 +42,10 @@ public class LeaveServiceObserverImpl implements UserRuleStatsObserver, EmailNot
 	}
 
 	@Override
-	public boolean sendNotificationEmail(MailRequestDto mailRequest) {
+	public boolean sendNotificationEmail(MailRequestDto mailRequest) throws Exception  {
 		mailRequest.setToAddress(getObservers(mailRequest.getUserId()));
-		try {
+	
 			return emailService.sendMail(mailRequest);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 		
 	}
 

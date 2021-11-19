@@ -1,6 +1,5 @@
 package com.germanium.lmsuserservice.controller;
 
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -25,45 +24,48 @@ import com.germanium.lmsuserservice.model.Department;
 import com.germanium.lmsuserservice.service.DepartmentService;
 
 @RestController
-@RequestMapping(value = "/api/v1/department" , produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/department", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DepartmentController {
 
 	Logger logger = LoggerFactory.getLogger(DepartmentController.class);
-	
+
 	@Autowired
 	DepartmentService departmentService;
-	
+
 	@PostMapping()
 	public ResponseEntity<Department> createDepartment(@Valid @RequestBody Department department) {
 		logger.info("Request received for creating department");
 		Department departmentDetails = departmentService.createDepartment(department);
-		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION).body(departmentDetails);		
+		return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION).body(departmentDetails);
 	}
-	
+
 	@GetMapping()
 	public ResponseEntity<List<Department>> getDepartment() {
 		logger.info("Request received for getting department details");
 		return ResponseEntity.ok().body(departmentService.getDepartments());
 	}
-	
+
 	@GetMapping("{departmentId}")
-	public ResponseEntity<Department> getDepartmentById(@PathVariable("departmentId") Integer departmentId) throws Exception {
+	public ResponseEntity<Department> getDepartmentById(@PathVariable("departmentId") Integer departmentId)
+			throws Exception {
 		logger.info("Request received for getting details of department ID : {}", departmentId);
 		return ResponseEntity.ok().body(departmentService.findDepartmentById(departmentId));
 	}
-	
+
 	@PutMapping("{departmentId}")
-	public ResponseEntity<?> updateDepartment (@PathVariable("departmentId") final Integer departmentId,
-			@Valid @RequestBody Department department) throws Exception{
+	public ResponseEntity<Department> updateDepartment(@PathVariable("departmentId") final Integer departmentId,
+			@Valid @RequestBody Department department) throws Exception {
 		logger.info("Update request received for department ID : {}", departmentId);
-		departmentService.updateDepartment(departmentId, department);		
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body("Department Details updated Successfully");
-		
+
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION)
+				.body(departmentService.updateDepartment(departmentId, department));
+
 	}
-	
+
 	@DeleteMapping("{departmentId}")
-	public ResponseEntity<?> deleteDepartment(@PathVariable("departmentId")Integer departmentId) throws Exception{
+	public ResponseEntity<Boolean> deleteDepartment(@PathVariable("departmentId") Integer departmentId) throws Exception {
 		logger.info("Delete request received for department ID : {}", departmentId);
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body(departmentService.deleteDepartment(departmentId));
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION)
+				.body(departmentService.deleteDepartment(departmentId));
 	}
 }
