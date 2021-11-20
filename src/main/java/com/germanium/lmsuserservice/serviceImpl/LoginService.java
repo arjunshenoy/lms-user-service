@@ -30,8 +30,9 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 		Optional<Login> user = loginRepo.findById(username);
 		if (user.isEmpty()) {
 			throw new BadCredentialsException("Bad Credentials");
+		} else {
+			return user.map(UserSecurityDto::new).get();
 		}
-		return user.map(UserSecurityDto::new).get();
 
 	}
 

@@ -50,6 +50,7 @@ public class SwaggerConfig {
 		swaggerResource.setName(name);
 		swaggerResource.setUrl("/api/swagger.json");
 		swaggerResource.setSwaggerVersion(version);
+		swaggerResource.setLocation(location);
 		return swaggerResource;
 	}
 

@@ -4,9 +4,6 @@ import com.opencsv.bean.CsvBindByPosition;
 
 public class ImportUserDTO {
 
-	//@CsvBindByPosition(position = 0)
-	//private String employeeId;
-
 	@CsvBindByPosition(position = 1)
 	private String firstName;
 
@@ -136,10 +133,6 @@ public class ImportUserDTO {
 
 	public String getIsPermanent() {
 		return isPermanent;
-	}
-
-	public void setPermanent(String isPermanent) {
-		this.isPermanent = isPermanent;
 	}
 
 	public String getEmail() {

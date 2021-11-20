@@ -27,22 +27,12 @@ public class EmailController {
 	private LeaveServiceObserverImpl leaveObserver;
 
 	@PostMapping(value = "/send", consumes = "application/json")
-	public ResponseEntity<?> sendMail(@RequestBody MailRequestDto request) throws Exception {
-		logger.info("Received request for mail to : {}.", request.toAddress);
-		boolean isSend = emailService.sendMail(request);
-		if (isSend)
-			return ResponseEntity.status(HttpStatus.OK).body("Message sent successfully");
-		else
-			return ResponseEntity.status(HttpStatus.OK).body("Message sent failed");
+	public ResponseEntity<Boolean> sendMail(@RequestBody MailRequestDto request) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(emailService.sendMail(request));
 	}
 
 	@PostMapping(value = "/leave/notify", consumes = "application/json")
-	public ResponseEntity<?> notifyUsers(@RequestBody MailRequestDto request) throws Exception {
-//		logger.info("Received request for mail to : {}.", request.toAddress);
-		boolean isSend = leaveObserver.sendNotificationEmail(request);
-		if (isSend)
-			return ResponseEntity.status(HttpStatus.OK).body(request);
-		else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mail couldn't sent.");
+	public ResponseEntity<Boolean> notifyUsers(@RequestBody MailRequestDto request) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK).body(leaveObserver.sendNotificationEmail(request));
 	}
 }

@@ -58,7 +58,7 @@ public class UserController implements UserServiceApi {
 	}
 
 	@PutMapping("/profiles/{userId}")
-	public ResponseEntity<?> updateUser(@PathVariable("userId") final Integer profileId,
+	public ResponseEntity<String> updateUser(@PathVariable("userId") final Integer profileId,
 			@Valid @RequestBody User userProfile) {
 
 		userService.updateUser(profileId, userProfile);
