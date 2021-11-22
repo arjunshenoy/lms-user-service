@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 	
 	@Override
-	public Department findDepartmentById(Integer departmentId) throws Exception {
+	public Department findDepartmentById(Integer departmentId) throws ResourceNotFoundException {
 		logger.info("Getting the Department Details for Department Id: "+departmentId);
 		Optional<Department> optionalDepartment = departmentRepo.findById(departmentId);
 		if (!optionalDepartment.isPresent()) {
@@ -45,7 +45,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public Department updateDepartment(Integer departmentId, Department department) throws Exception {
+	public Department updateDepartment(Integer departmentId, Department department) throws ResourceNotFoundException {
 		if(!departmentRepo.existsById(departmentId)) {
 			throw new ResourceNotFoundException("Department With Department Id: "+ departmentId+ " Not Found");
 		}
@@ -54,7 +54,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public boolean deleteDepartment(Integer departmentId) throws Exception {
+	public boolean deleteDepartment(Integer departmentId) throws ResourceNotFoundException {
 		logger.info("Deleting Department Details");
 		if (!departmentRepo.existsById(departmentId)) {
 			throw new ResourceNotFoundException("Department With Department Id: "+ departmentId+ " Not Found");
