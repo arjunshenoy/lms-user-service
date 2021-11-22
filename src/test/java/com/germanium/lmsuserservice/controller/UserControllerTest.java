@@ -76,11 +76,13 @@ public class UserControllerTest {
 		user1.setPhoneNumber("+918129953172");
 		user1.setEmail("asasas@gmail.com");
 		when(userService.findUserById(isA(Integer.class))).thenReturn(user1);
-		userController.getUserById(1);
+		var responseEntity = userController.getUserById(1);
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+
 	}
 
 @Test(groups = "mocked")
-public void updateMatchProfile_shouldReturnStatuscodeOK() throws ParseException {
+public void updateUserProfile_shouldReturnStatuscodeOK() throws ParseException {
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 	User user1 = new User();
 	user1.setFirstName("Arjun");

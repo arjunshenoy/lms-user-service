@@ -23,11 +23,9 @@ import org.testng.annotations.Test;
 
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.User;
-import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
-import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
 import com.germanium.lmsuserservice.serviceImpl.LeaveServiceObserverImpl;
 import com.germanium.lmsuserservice.serviceImpl.LoginService;
 import com.germanium.lmsuserservice.serviceImpl.UserServiceImpl;
