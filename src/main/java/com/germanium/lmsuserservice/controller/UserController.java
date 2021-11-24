@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.germanium.lmsuserservice.api.UserServiceApi;
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
+import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.service.UserService;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -82,17 +83,22 @@ public class UserController implements UserServiceApi {
 	}
 
 	@DeleteMapping(value = "/profiles/{userId}")
-	public ResponseEntity<?> deleteUserProfile(@PathVariable("userId") Integer userId)
-	{
+	public ResponseEntity<?> deleteUserProfile(@PathVariable("userId") Integer userId) {
 		userService.deleteUser(userId);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@DeleteMapping(value = "/profiles")
-	public ResponseEntity<?> deleteUserProfile(@RequestParam("ids") List<String> ids)
-	{
+	public ResponseEntity<?> deleteUserProfile(@RequestParam("ids") List<String> ids) {
 		userService.deleteUsers(ids);
 		return ResponseEntity.noContent().build();
+	}
+
+	@PostMapping(value = "/profiles/query")
+	public ResponseEntity<List<Integer>> getUserIds(@Valid @RequestBody MailRequestDto query) {
+		List<Integer> userIds = userService.getUserIds(query);
+		return ResponseEntity.status(HttpStatus.OK).body(userIds);
+
 	}
 
 }

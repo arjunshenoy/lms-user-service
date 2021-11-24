@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
+import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 
 public interface UserService {
 
@@ -20,4 +21,7 @@ public interface UserService {
 	public void deleteUser(Integer userId);
 
 	public void deleteUsers(List<String> ids);
+	
+	public List<Integer> getUserIds(MailRequestDto query);
+	
 }
