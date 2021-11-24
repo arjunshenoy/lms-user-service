@@ -90,7 +90,8 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 			userLogin.setUserName(user.getEmail());
 			userLogin.setaActive(true);
 			userLogin.setId(user.getEmployeeId());
-			userLogin.setPassword(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
+			String password = bCryptPasswordEncoder.encode(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
+			userLogin.setPassword(password);
 			userLogin.setRoles(user.getRole());
 			loginList.add(userLogin);
 		});
