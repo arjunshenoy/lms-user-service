@@ -36,7 +36,7 @@ public class LeaveServiceObserverImpl implements UserRuleStatsObserver, EmailNot
 	public void upadteRuleStatsTable(List<Integer> userList) {
 		userList.stream().forEach(user -> {
 			restTemplate.postForObject(new StringBuilder(leaveService).append(STATS_URL).append(user).toString(), user,
-					Integer.class);
+					Boolean.class);
 		});
 
 	}
