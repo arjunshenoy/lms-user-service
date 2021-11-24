@@ -68,4 +68,53 @@ public class DepartmentController {
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION)
 				.body(departmentService.deleteDepartment(departmentId));
 	}
+	
+	@GetMapping("{departmentId}/workHours")
+	public ResponseEntity<Float> getDepartmentWorkHours(@PathVariable("departmentId") Integer departmentId) throws Exception {
+		logger.info("Request received for getting work hours of department ID : {}", departmentId);
+		return ResponseEntity.ok().body(departmentService.findDepartmentById(departmentId).getWorkingHours());
+	}
+	
+	@PutMapping("{departmentId}/workHours")
+	public ResponseEntity<?> updateDepartmentWorkHours (@PathVariable("departmentId") final Integer departmentId,
+			@Valid @RequestBody float workHours) throws Exception{
+		logger.info("Update request received for department work hours ID : {}", departmentId);
+		Department dep = departmentService.findDepartmentById(departmentId);
+		dep.setWorkingHours(workHours);
+		departmentService.updateDepartment(departmentId, dep);		
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body("Department Details updated Successfully");
+		
+	}
+	
+	@GetMapping("{departmentId}/workEmployees")
+	public ResponseEntity<Float> getDepartmentWorkEmployees(@PathVariable("departmentId") Integer departmentId) throws Exception {
+		logger.info("Request received for getting working employees needed by department ID : {}", departmentId);
+		return ResponseEntity.ok().body(departmentService.findDepartmentById(departmentId).getWorkingEmployees());
+	}
+	
+	@PutMapping("{departmentId}/workEmployees")
+	public ResponseEntity<?> updateDepartmentWorkEmployees(@PathVariable("departmentId") final Integer departmentId,
+			@Valid @RequestBody float workEmployees) throws Exception{
+		logger.info("Update request received for department working employee count ID : {}", departmentId);
+		Department dep = departmentService.findDepartmentById(departmentId);
+		dep.setWorkingEmployees(workEmployees);
+		departmentService.updateDepartment(departmentId, dep);		
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body("Department Details updated Successfully");	
+	}
+	
+	@GetMapping("{departmentId}/leavequeue")
+	public ResponseEntity<Integer> getDepartmentLeaveQueue(@PathVariable("departmentId") Integer departmentId) throws Exception {
+		logger.info("Request received for getting working employees needed by department ID : {}", departmentId);
+		return ResponseEntity.ok().body(departmentService.findDepartmentById(departmentId).getLeaveQueueing());
+	}
+	
+	@PutMapping("{departmentId}/leavequeue")
+	public ResponseEntity<?> updateDepartmentLeaveQueue(@PathVariable("departmentId") final Integer departmentId,
+			@Valid @RequestBody int leaveQueue) throws Exception{
+		logger.info("Update request received for department work hours ID : {}", departmentId);
+		Department dep = departmentService.findDepartmentById(departmentId);
+		dep.setLeaveQueueing(leaveQueue);
+		departmentService.updateDepartment(departmentId, dep);		
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body("Department Details updated Successfully");	
+	}
 }
