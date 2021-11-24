@@ -17,9 +17,11 @@ import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
 import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.repository.UserRepository;
+import com.germanium.lmsuserservice.repository.UserRepositoryCustom;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
 import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
+import com.germanium.lmsuserservice.service.util.UserServiceUtil;
 import com.germanium.lmsuserservice.service.EmailService;
 import com.germanium.lmsuserservice.service.UserService;
 
@@ -40,6 +42,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private LeaveServiceObserverImpl ruleStatsObserver;
+	
+	@Autowired
+	private UserRepositoryCustom userRepoCustom;
 
 	@Override
 	public List<User> getUsers() {
@@ -61,20 +66,18 @@ public class UserServiceImpl implements UserService {
 		List<User> savedUserDetails = (List<User>) userRepo.saveAll(user);
 		createUserObserver.updateUserLoginTable(savedUserDetails);
 		List<Integer> userIdList = savedUserDetails.stream().map(mapper -> mapper.getEmployeeId())
-			.collect(Collectors.toList());
+				.collect(Collectors.toList());
 		ruleStatsObserver.upadteRuleStatsTable(userIdList);
-		savedUserDetails.stream().forEach( userObject -> {
+		savedUserDetails.stream().forEach(userObject -> {
 			MailRequestDto mailRequestDto = new MailRequestDto();
 			mailRequestDto.setContent(new StringBuilder("Your details are added to LMS, \n User Name : ")
-					.append(userObject.getEmail())
-					.append("\n Password : ")
-					.append(userObject.getEmail())
+					.append(userObject.getEmail()).append("\n Password : ").append(userObject.getEmail())
 					.append(userObject.getDob().getYear()).toString());
 			mailRequestDto.setSubject("LMS User Credentails");
-			mailRequestDto.setToAddress(new String [] {userObject.getEmail()});
+			mailRequestDto.setToAddress(new String[] { userObject.getEmail() });
 			emailObserver.sendNotificationEmail(mailRequestDto);
 		});
-		
+
 		return savedUserDetails;
 
 	}
@@ -143,6 +146,14 @@ public class UserServiceImpl implements UserService {
 		for (String id : ids) {
 			deleteUser(Integer.valueOf(id));
 		}
+	}
+
+	@Override
+	public List<Integer> getUserIds(MailRequestDto query) {
+
+		String executableQuery = UserServiceUtil.generateDynamicSQL(query.getContent());
+		return userRepoCustom.executeSqlQuery(executableQuery);
+
 	}
 
 }
