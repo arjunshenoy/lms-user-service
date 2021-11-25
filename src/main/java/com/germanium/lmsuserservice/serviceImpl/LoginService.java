@@ -11,6 +11,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.germanium.lmsuserservice.model.Login;
@@ -24,6 +25,9 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 
 	@Autowired
 	private LoginRepository loginRepo;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -65,7 +69,8 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 			userLogin.setUserName(user.getEmail());
 			userLogin.setaActive(true);
 			userLogin.setId(user.getEmployeeId());
-			userLogin.setPassword(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
+			String password = bCryptPasswordEncoder.encode(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
+			userLogin.setPassword(password);
 			userLogin.setRoles(user.getRole());
 			loginList.add(userLogin);
 		});
@@ -85,7 +90,8 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 			userLogin.setUserName(user.getEmail());
 			userLogin.setaActive(true);
 			userLogin.setId(user.getEmployeeId());
-			userLogin.setPassword(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
+			String password = bCryptPasswordEncoder.encode(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
+			userLogin.setPassword(password);
 			userLogin.setRoles(user.getRole());
 			loginList.add(userLogin);
 		});
