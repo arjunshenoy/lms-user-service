@@ -6,6 +6,9 @@ CREATE TABLE IF NOT EXISTS `department` (
 	`updated_timestamp` TIMESTAMP,
 	`created_by` VARCHAR (255),
 	`updated_by` VARCHAR (255),
+	`working_hours_per_day` FLOAT DEFAULT 0,
+	`working_employees_per_day` FLOAT DEFAULT 0,
+	`leave_request_queueing` int DEFAULT 0,
 	PRIMARY KEY (`department_id`)
 );
 
@@ -69,7 +72,7 @@ INSERT INTO login (employee_id,username, password,active, roles, created_ts) VAL
 
 
 
-INSERT INTO `department` (`department_id`,`department_name`,`head_id`,`created_timestamp`,`updated_timestamp`,`created_by`,`updated_by`) VALUES(1,'ComputerScience',2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'admin','admin'); 
+INSERT INTO `department` (`department_id`,`department_name`,`head_id`,`created_timestamp`,`updated_timestamp`,`created_by`,`updated_by`, `working_hours_per_day`) VALUES(1,'ComputerScience',2,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'admin','admin',40.0); 
 
 INSERT INTO `user` (`employee_id`,`first_name` ,`middle_name` ,`last_name` ,`phone_number`,`email` ,`gender` ,`dob` ,`date_of_joining` ,`is_permanent` ,`department_id` ,`role` ,`address` ,`created_timestamp` ,`updated_timestamp` ,`created_by` ,`updated_by` ,`is_active`) VALUES (1,'ARJUN','KRISHNA','SHENOY','121212121','arjunkshenoy.mec@gmail.com','M','1994-03-09','1994-03-09','1',1,'Staff','asasasasa',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,'admin','admin', '1');
 
