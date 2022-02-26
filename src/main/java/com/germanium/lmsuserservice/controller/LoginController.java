@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.germanium.lmsuserservice.model.Login;
 import com.germanium.lmsuserservice.model.dto.UpdatePasswordDto;
-import com.germanium.lmsuserservice.serviceImpl.LoginService;
+import com.germanium.lmsuserservice.serviceimpl.LoginService;
 
 
 @RestController

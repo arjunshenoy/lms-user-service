@@ -1,4 +1,4 @@
-package com.germanium.lmsuserservice.serviceImpl;
+package com.germanium.lmsuserservice.serviceimpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,10 +19,7 @@ import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.repository.UserRepositoryCustom;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
-import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
-import com.germanium.lmsuserservice.service.observer.UserRuleStatsObserver;
 import com.germanium.lmsuserservice.service.util.UserServiceUtil;
-import com.germanium.lmsuserservice.service.EmailService;
 import com.germanium.lmsuserservice.service.UserService;
 
 @Service

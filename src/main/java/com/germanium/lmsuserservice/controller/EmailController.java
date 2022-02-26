@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.service.EmailService;
-import com.germanium.lmsuserservice.serviceImpl.LeaveServiceObserverImpl;
+import com.germanium.lmsuserservice.serviceimpl.LeaveServiceObserverImpl;
 
 @RequestMapping("/mail")
 @RestController

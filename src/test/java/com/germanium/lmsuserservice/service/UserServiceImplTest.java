@@ -26,9 +26,9 @@ import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.repository.UserRepository;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
 import com.germanium.lmsuserservice.service.observer.EmailNotificationObserver;
-import com.germanium.lmsuserservice.serviceImpl.LeaveServiceObserverImpl;
-import com.germanium.lmsuserservice.serviceImpl.LoginService;
-import com.germanium.lmsuserservice.serviceImpl.UserServiceImpl;
+import com.germanium.lmsuserservice.serviceimpl.LeaveServiceObserverImpl;
+import com.germanium.lmsuserservice.serviceimpl.LoginService;
+import com.germanium.lmsuserservice.serviceimpl.UserServiceImpl;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
