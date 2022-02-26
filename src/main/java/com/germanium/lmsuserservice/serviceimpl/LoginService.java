@@ -29,11 +29,13 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	private static String LOGIN_ERROR= "Bad Credentials";
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Login> user = loginRepo.findById(username);
 		if (user.isEmpty()) {
-			throw new BadCredentialsException("Bad Credentials");
+			throw new BadCredentialsException(LOGIN_ERROR);
 		} else {
 			return user.map(UserSecurityDto::new).get();
 		}
@@ -43,7 +45,7 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 	public Login getLoggedinUserDetails(String username) {
 		Optional<Login> user = loginRepo.findById(username);
 		if (user.isEmpty()) {
-			throw new BadCredentialsException("Bad Credentials");
+			throw new BadCredentialsException(LOGIN_ERROR);
 		}
 		return user.get();
 	}
@@ -55,20 +57,21 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 
 	public boolean checkIfValidOldPassword(Login login, String oldPassword) {
 
-		return (login.getPassword().equals(oldPassword) ? true : false);
+		return (login.getPassword().equals(oldPassword)); //check this test case
 	}
 
 	@Transactional
 	public void addUserLoginDetails(List<User> userList) {
-		List<Login> loginList = new ArrayList<Login>();
+		List<Login> loginList = new ArrayList<>(); //check this
 		userList.stream().forEach(user -> {
 			if (loginRepo.existsById(user.getEmail())) {
-				throw new BadCredentialsException("Bad Credentials");
+				throw new BadCredentialsException(LOGIN_ERROR);
 			}
 			Login userLogin = new Login();
 			userLogin.setUserName(user.getEmail());
 			userLogin.setaActive(true);
 			userLogin.setId(user.getEmployeeId());
+
 			String password = bCryptPasswordEncoder.encode(new StringBuilder(user.getEmail()).append(user.getDob().getYear()).toString());
 			userLogin.setPassword(password);
 			userLogin.setRoles(user.getRole());
@@ -79,12 +82,13 @@ public class LoginService implements UserDetailsService, CreateUserObserver {
 
 	}
 
+//below update method is same as add user.
 	@Override
 	public void updateUserLoginTable(List<User> userList) {
-		List<Login> loginList = new ArrayList<Login>();
+		List<Login> loginList = new ArrayList<>();
 		userList.stream().forEach(user -> {
 			if (loginRepo.existsById(user.getEmail())) {
-				throw new BadCredentialsException("Bad Credentials");
+				throw new BadCredentialsException(LOGIN_ERROR);
 			}
 			Login userLogin = new Login();
 			userLogin.setUserName(user.getEmail());

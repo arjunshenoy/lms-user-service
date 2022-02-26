@@ -1,5 +1,6 @@
 package com.germanium.lmsuserservice.controller;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
@@ -70,7 +71,7 @@ public class UserController implements UserServiceApi {
 
 	@PostMapping(value = "/profiles/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Transactional
-	public ResponseEntity<List<User>> importUserData(@RequestParam("file") MultipartFile file) throws Exception {
+	public ResponseEntity<List<User>> importUserData(@RequestParam("file") MultipartFile file) throws IOException {
 
 		logger.debug("API REQUEST - importUser. Import file = {}", file.getName());
 		Reader reader = new InputStreamReader(file.getInputStream());

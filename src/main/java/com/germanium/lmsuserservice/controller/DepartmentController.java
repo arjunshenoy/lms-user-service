@@ -76,13 +76,13 @@ public class DepartmentController {
 	}
 	
 	@PutMapping("{departmentId}/workHours")
-	public ResponseEntity<?> updateDepartmentWorkHours (@PathVariable("departmentId") final Integer departmentId,
+	public ResponseEntity<String> updateDepartmentWorkHours (@PathVariable("departmentId") final Integer departmentId,  //used string instead of ?
 			@Valid @RequestBody float workHours) throws Exception{
 		logger.info("Update request received for department work hours ID : {}", departmentId);
 		Department dep = departmentService.findDepartmentById(departmentId);
 		dep.setWorkingHours(workHours);
 		departmentService.updateDepartment(departmentId, dep);		
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body("Department Details updated Successfully");
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.LOCATION).body("Department Details updated Successfully"); //make it String constant
 		
 	}
 	
@@ -93,7 +93,7 @@ public class DepartmentController {
 	}
 	
 	@PutMapping("{departmentId}/workEmployees")
-	public ResponseEntity<?> updateDepartmentWorkEmployees(@PathVariable("departmentId") final Integer departmentId,
+	public ResponseEntity<String> updateDepartmentWorkEmployees(@PathVariable("departmentId") final Integer departmentId,
 			@Valid @RequestBody float workEmployees) throws Exception{
 		logger.info("Update request received for department working employee count ID : {}", departmentId);
 		Department dep = departmentService.findDepartmentById(departmentId);
@@ -109,7 +109,7 @@ public class DepartmentController {
 	}
 	
 	@PutMapping("{departmentId}/leavequeue")
-	public ResponseEntity<?> updateDepartmentLeaveQueue(@PathVariable("departmentId") final Integer departmentId,
+	public ResponseEntity<String> updateDepartmentLeaveQueue(@PathVariable("departmentId") final Integer departmentId,
 			@Valid @RequestBody int leaveQueue) throws Exception{
 		logger.info("Update request received for department work hours ID : {}", departmentId);
 		Department dep = departmentService.findDepartmentById(departmentId);
