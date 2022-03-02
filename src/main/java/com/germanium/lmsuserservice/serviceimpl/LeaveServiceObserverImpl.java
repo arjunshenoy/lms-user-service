@@ -1,4 +1,4 @@
-package com.germanium.lmsuserservice.serviceImpl;
+package com.germanium.lmsuserservice.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;

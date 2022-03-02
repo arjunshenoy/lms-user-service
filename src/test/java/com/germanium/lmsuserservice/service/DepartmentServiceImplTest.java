@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
 import com.germanium.lmsuserservice.exceptions.ResourceNotFoundException;
 import com.germanium.lmsuserservice.model.Department;
 import com.germanium.lmsuserservice.repository.DepartmentRepository;
-import com.germanium.lmsuserservice.serviceImpl.DepartmentServiceImpl;
+import com.germanium.lmsuserservice.serviceimpl.DepartmentServiceImpl;
 
 public class DepartmentServiceImplTest {
 

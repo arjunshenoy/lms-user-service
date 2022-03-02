@@ -1,6 +1,4 @@
-package com.germanium.lmsuserservice.serviceImpl;
-
-import java.util.List;
+package com.germanium.lmsuserservice.serviceimpl;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
