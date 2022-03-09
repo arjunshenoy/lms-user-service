@@ -95,11 +95,4 @@ public class UserController implements UserServiceApi {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping(value = "/profiles/query")
-	public ResponseEntity<List<Integer>> getUserIds(@Valid @RequestBody MailRequestDto query) {
-		List<Integer> userIds = userService.getUserIds(query);
-		return ResponseEntity.status(HttpStatus.OK).body(userIds);
-
-	}
-
 }

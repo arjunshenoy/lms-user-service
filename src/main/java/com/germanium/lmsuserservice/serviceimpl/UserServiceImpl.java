@@ -17,9 +17,7 @@ import com.germanium.lmsuserservice.model.User;
 import com.germanium.lmsuserservice.model.dto.ImportUserDTO;
 import com.germanium.lmsuserservice.model.dto.MailRequestDto;
 import com.germanium.lmsuserservice.repository.UserRepository;
-import com.germanium.lmsuserservice.repository.UserRepositoryCustom;
 import com.germanium.lmsuserservice.service.observer.CreateUserObserver;
-import com.germanium.lmsuserservice.service.util.UserServiceUtil;
 import com.germanium.lmsuserservice.service.UserService;
 
 @Service
@@ -40,9 +38,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private LeaveServiceObserverImpl ruleStatsObserver;
 	
-	@Autowired
-	private UserRepositoryCustom userRepoCustom;
-
 	@Override
 	public List<User> getUsers() {
 		return (List<User>) userRepo.findAll();
@@ -143,14 +138,6 @@ public class UserServiceImpl implements UserService {
 		for (String id : ids) {
 			deleteUser(Integer.valueOf(id));
 		}
-	}
-
-	@Override
-	public List<Integer> getUserIds(MailRequestDto query) {
-
-		String executableQuery = UserServiceUtil.generateDynamicSQL(query.getContent());
-		return userRepoCustom.executeSqlQuery(executableQuery);
-
 	}
 
 }

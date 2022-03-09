@@ -22,6 +22,4 @@ public interface UserService {
 
 	public void deleteUsers(List<String> ids);
 	
-	public List<Integer> getUserIds(MailRequestDto query);
-	
 }
