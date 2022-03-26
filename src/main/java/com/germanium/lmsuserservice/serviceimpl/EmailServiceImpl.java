@@ -34,9 +34,10 @@ public class EmailServiceImpl implements EmailService, EmailNotificationObserver
 				return false;
 			}
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(mailRequest.getToAddress());
+			message.setTo(mailRequest.getToAddress()[0]);
 			message.setSubject(mailRequest.getSubject());
 			message.setText(mailRequest.getContent());
+			//System.out.println(mailRequest.getContent());
 			emailSender.send(message);
 			logger.info("Message sent.");
 			return true;

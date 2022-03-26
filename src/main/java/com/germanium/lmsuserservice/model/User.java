@@ -87,6 +87,17 @@ public class User extends SystemProperties {
 	@ApiModelProperty(value = "isActive")
 	private boolean isActive;
 
+	@NotNull
+	@Column(name ="mremail")
+	@ApiModelProperty(value = "email")
+	private String manager_email;
+
+	@NotNull
+	@Column(name ="hremail")
+	@ApiModelProperty(value = "email")
+	private String hr_email;
+
+
 	public Department getDepartment() {
 		return department;
 	}
@@ -211,6 +222,21 @@ public class User extends SystemProperties {
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-	
+
+	public String getManager_email() {
+		return manager_email;
+	}
+
+	public void setManager_email(String manager_email) {
+		this.manager_email = manager_email;
+	}
+
+	public String getHr_email() {
+		return hr_email;
+	}
+
+	public void setHr_email(String hr_email) {
+		this.hr_email = hr_email;
+	}
 
 }
