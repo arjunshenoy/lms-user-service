@@ -48,10 +48,21 @@ public class UserController implements UserServiceApi {
 		return ResponseEntity.ok().body(entity);
 	}
 
-	@GetMapping("profiles/{userId}")
+	@GetMapping("profiles/{}")
 	public ResponseEntity<User> getUserById(@PathVariable("userId") Integer userId) {
 		return ResponseEntity.ok().body(userService.findUserById(userId));
 	}
+
+	@GetMapping("profiles/email/{userId}")
+	public ResponseEntity<List<String>> getUserByIdEmail(@PathVariable("userId") Integer userId) {
+		return ResponseEntity.ok().body(userService.findUserByEmailID(userId));
+	}
+
+	@GetMapping("profiles/managers/email/{userId}")
+	public ResponseEntity<List<String>> getUserByIdManagerEmail(@PathVariable("managerEmail") String managerEmail) {
+		return ResponseEntity.ok().body(userService.findUserByManagerEmail(managerEmail));
+	}
+
 
 	@PostMapping("profiles")
 	public ResponseEntity<List<User>> createUser(@Valid @RequestBody List<User> userProfile) {

@@ -2,6 +2,7 @@ package com.germanium.lmsuserservice.serviceimpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -140,4 +141,26 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public List<String> findUserByEmailID(Integer userID){
+		Optional<User> userDetails = userRepo.findById(userID);
+		if(!userDetails.isPresent()){
+			throw new ResourceNotFoundException("User ID not found");
+		}
+		List<String> emailIDS= new ArrayList<String>();
+		emailIDS.add(userDetails.get().getManager_email());
+		emailIDS.add(userDetails.get().getHr_email());
+		return emailIDS;
+	}
+
+	public List<String> findUserByManagerEmail(String managerEmail){
+		User userDetails = userRepo.findUserByEmail(managerEmail);
+//		if(!userDetails) {
+//			throw new ResourceNotFoundException("User ID not found");
+//		}
+		List<String> emailIDS= new ArrayList<String>();
+		emailIDS.add(userDetails.getManager_email());
+		emailIDS.add(userDetails.getHr_email());
+		return emailIDS;
+	}
 }
